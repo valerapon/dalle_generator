@@ -1,9 +1,8 @@
 import src.getters as getters
-from src.dicts import CAT_TO_NUM, NUM_TO_CAT, CAT_TO_PROMPT
+from src.dicts import Category, make_hierachy
 
 __all__ = [
+    "Category",
+    "make_hierachy",
     "getters",
-    "CAT_TO_NUM",
-    "NUM_TO_CAT",
-    "CAT_TO_PROMPT",
 ]

@@ -1,5 +1,4 @@
-from typing import Optional
-from src.dicts import CAT_TO_NUM, CAT_TO_PROMPT
+from typing import Any
 import openai
 
 
@@ -7,6 +6,7 @@ def generate_image(
         cat_id: int,
         api_key: str,
         prompt: str,
+        Category: Any,
 ) -> str:
         '''
         Генерируем картинку по текстовому запросу prompt.
@@ -21,19 +21,18 @@ def generate_image(
         :rtype: str
         :return: ссылка на изображение 
         '''
-
-        if cat_id < 0 or cat_id >= len(CAT_TO_NUM):
+        if cat_id not in Category.ID_TO_OBJ:
                 return 101, 'Incorrect value of cat_id: {0}'.format(cat_id)
 
         if prompt.strip() == '':
-                prompt = CAT_TO_PROMPT[cat_id]
+                prompt = Category.ID_TO_PROMPT[cat_id]
 
         try:
                 openai.api_key = api_key
                 response = openai.Image.create(
                         prompt=prompt,
                         n=1,
-                        size="512x512"
+                        size="1024x1024"
                 )
         except openai.error.AuthenticationError:
                 return 102, 'Incorrect API key provided: {0}'.format(api_key)
